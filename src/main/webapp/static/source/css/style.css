@@ -1,0 +1,58 @@
+.i_car {
+    width: 141px;
+    height: 38px;
+    line-height: 38px;
+    background-color: #f6f6f6;
+
+}
+
+.car_t {
+    width: 95px;
+    height: 38px;
+    overflow: hidden;
+    font-size: 14px;
+    margin-left: 38px;
+    cursor: pointer;
+}
+
+.top {
+    box-sizing: border-box;
+    width: 95%;
+}
+.tc{
+    box-sizing: border-box;
+    width: 40%;
+}
+.search {
+    box-sizing: border-box;
+    width: 40%;
+    padding: 33px;
+}
+
+.s_ipt {
+    box-sizing: border-box;
+    width: 78%;
+    padding: 5px;
+}
+
+.s_btn {
+    box-sizing: border-box;
+    width: 20%;
+    padding: 5px;
+}
+
+.search a {
+    margin-right: 12px;
+    display: inline-block;
+}
+.chat_list{
+    box-sizing: border-box;
+    width: 75%;
+    padding: 5px
+}
+
+.btn_delete a{
+    color:#fff;
+
+}
+.btn_delete a:hover{color:#fff}

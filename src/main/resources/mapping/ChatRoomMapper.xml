@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dyliu.webchat.dao.IChatRoomDao">
+
+  <resultMap id="BaseResultMap" type="com.dyliu.webchat.pojo.ChatRoom">
+    <id column="ID" property="id" jdbcType="INTEGER"/>
+    <result column="CHAT_NAME" property="chat_name" jdbcType="VARCHAR"/>
+    <result column="SPEAKER_NAME" property="speaker_name" jdbcType="VARCHAR"/>
+    <result column="PROFILE" property="profile" jdbcType="VARCHAR"/>
+    <result column="STATUS" property="status" jdbcType="INTEGER"/>
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    ID,CHAT_NAME,SPEAKER_NAME,PROFILE,STATUS
+  </sql>
+
+  <!-- 查询所有用户 -->
+  <select id="selectAll" resultMap="BaseResultMap">
+      SELECT  ID,CHAT_NAME,SPEAKER_NAME,PROFILE,STATUS FROM chatroom
+  </select>
+
+  <!-- 根据名称查询答疑室 selectChatRoomByChatNameAndUserid-->
+  <select id="selectChatRoomByChatName" resultMap="BaseResultMap" parameterType="string">
+    SELECT <include refid="Base_Column_List"/>
+    FROM chatroom
+    WHERE CHAT_NAME LIKE CONCAT('%',#{chat_name, jdbcType=VARCHAR},'%' )
+  </select>
+
+  <!-- 根据名称查询答疑室 selectChatRoomByChatNameAndUserid-->
+  <select id="selectChatRoomByChatNameAndUserid" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM chatroom
+    WHERE CHAT_NAME LIKE CONCAT('%',#{chat_name},'%' ) AND SPEAKER_NAME=#{nickname}
+  </select>
+
+  <!-- 根据主讲人查询答疑室 -->
+  <select id="selectChatRoomBySpeakerName" resultMap="BaseResultMap" parameterType="string">
+    SELECT <include refid="Base_Column_List"/>
+    FROM chatroom
+    WHERE SPEAKER_NAME=#{speaker_name,jdbcType=VARCHAR}
+  </select>
+
+  <!-- 根据答疑室是否开启查询答疑室 -->
+  <select id="selectChatRoomInAnswer" resultMap="BaseResultMap" parameterType="string">
+    SELECT <include refid="Base_Column_List"/>
+    FROM chatroom
+    WHERE STATUS=1
+  </select>
+
+  <!-- 根据用户id查询答疑室 -->
+  <select id="selectChatRoomById" resultMap="BaseResultMap" parameterType="int">
+    SELECT <include refid="Base_Column_List"/>
+    FROM chatroom
+    WHERE ID = #{id, jdbcType=INTEGER}
+  </select>
+
+  <!-- 更新答疑室 -->
+  <update id="update" parameterType="com.dyliu.webchat.pojo.ChatRoom">
+  UPDATE chatroom
+  <set>
+    <if test="chat_name != null and chat_name != ''">
+      CHAT_NAME = #{chat_name, jdbcType=VARCHAR},
+    </if>
+    <if test="speaker_name != null and speaker_name != ''">
+      SPEAKER_NAME= #{speaker_name, jdbcType=VARCHAR},
+    </if>
+    <if test="profile != null and profile != ''">
+      PROFILE = #{profile, jdbcType=VARCHAR},
+    </if>
+    STATUS = #{status, jdbcType=INTEGER}
+  </set>
+  WHERE ID = #{id, jdbcType=INTEGER}
+</update>
+
+  <!-- 删除答疑室 -->
+  <delete id="delete" parameterType="int">
+    DELETE FROM chatroom
+    WHERE id = #{id, jdbcType=INTEGER}
+  </delete>
+
+</mapper>
